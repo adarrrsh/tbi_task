@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBI Task</title>
+</head>
+
+<body>
+    <div id="timer"></div>
+    <button id="startBtn">Start</button>
+    <script>
+        const DURATION = 600;
+        let timeLeft = DURATION;
+        let intervalId = null;
+        const timerEl = document.getElementById('timer');
+
+        function render() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerEl.innerText = String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+        }
+
+        function stopTimer() {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+
+        function startTimer() {
+            if (timeLeft <= 0) {
+                timeLeft = DURATION;
+                render();
+            }
+            intervalId = setInterval(() => {
+                timeLeft--;
+                render();
+                if (timeLeft <= 0) {
+                    stopTimer();
+                }
+            }, 1000);
+        }
+
+        render();
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            if (intervalId === null) {
+                startTimer();
+            } else {
+                stopTimer();
+                timeLeft = DURATION;
+                render();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

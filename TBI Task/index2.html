@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBI Task</title>
+</head>
+
+<body>
+    <div id="timer"></div>
+    <button id="startBtn">Start</button>
+    <button id="pauseBtn">Pause/Resume</button>
+
+    <script>
+        const DURATION = 600;
+        let timeLeft = DURATION;
+        let intervalId = null;
+        let isPaused = false;
+        const timerEl = document.getElementById('timer');
+
+        function render() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerEl.innerText = String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+        }
+
+        function stopTimer() {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+        function pauseTimer() {
+            isPaused = true;
+        }
+        function resumeTimer() {
+            isPaused = false;
+        }
+
+        function startTimer() {
+            if (timeLeft <= 0) {
+                timeLeft = DURATION;
+                render();
+            }
+            intervalId = setInterval(() => {
+                if (!isPaused) {
+                    timeLeft--;
+                    render();
+                    if (timeLeft <= 0) {
+                        stopTimer();
+                    }
+                } else {
+                    render()
+                }
+
+            }, 1000);
+        }
+
+        render();
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            if (intervalId === null) {
+                startTimer();
+            } else {
+                stopTimer();
+                timeLeft = DURATION;
+                render();
+            }
+        });
+        document.getElementById("pauseBtn").addEventListener('click', () => {
+            if (!isPaused) {
+                pauseTimer();
+            } else {
+                resumeTimer();
+            }
+        })
+    </script>
+
+</body>
+
+</html>
