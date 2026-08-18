@@ -14,4 +14,6 @@ A single-file countdown timer (`index1.html`) with a Start / Reset button.
 ## Files
 
 - `index1.html` — current version.
-- `index2.html` — earlier version, kept for reference.
+- `index2.html` — features added.
+- `original.html` — older version.
+
